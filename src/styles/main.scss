@@ -1,0 +1,145 @@
+$orange: #ff751e;
+$orange-light: #ffe5c9;
+$orange-dark: #ff5d1e;
+
+html, body {
+  box-sizing: border-box;
+}
+
+*, *::after, *::before {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-image: url('data:image/svg+xml;charset=utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">\
+      <rect x="0" y="0" width="31" height="31" fill="white" stroke-width="1" stroke-dashoffset="10" stroke-dasharray="3 3" stroke="%23B5C1CE"/>\
+    </svg>\
+  ');
+}
+
+.App {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.Button {
+  text-align: center;
+  cursor: pointer;
+  background: $orange-light;
+  color: $orange-dark;
+  border: 0;
+  border-radius: 6px;
+  appearance: none;
+  padding: 8px 12px;
+  font-weight: bold;
+}
+
+.ButtonGroup {
+  display: flex;
+  margin: -8px;
+
+  .Button {
+    margin: 8px;
+  }
+}
+
+.InputGroup {
+
+  .InputGroup__title {
+    font-weight: bold;
+  }
+
+  .InputGroup__body {
+    display: flex;
+    margin: -8px;
+  }
+
+  .InputGroup & {
+    flex: 1;
+    margin: 8px;
+  }
+}
+
+.BigInputGroup {
+  flex: 3.3333333;
+  display: flex;
+  flex-direction: column;
+}
+
+.Input {
+  display: flex;
+  flex-direction: column;
+
+  .Input__label {
+    margin-bottom: 6px;
+  }
+
+  .Input__entry {
+    height: 34px;
+  }
+
+  .InputGroup & {
+    flex: 1;
+    margin: 8px;
+  }
+}
+
+.Header {
+
+}
+
+.NotePreview {
+  background: #E2E6F2;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+
+  .NotePreview__thumb {
+    width: 160px;
+    height: 120px;
+    background-size: contain;
+  }
+
+  .NotePreview__details {
+    margin-left: 12px;
+    flex: 1;
+  }
+
+  .NotePreview__title {
+    margin: 0;
+    margin-bottom: 6px;
+    font-weight: 1rem;
+  }
+}
+
+.WaveViewer {
+
+  .WaveViewer__controls {
+    margin: 8px 0;
+    display: flex;
+  }
+
+  .WaveViewer__controlGroup--left {
+    align-items: center;
+    display: flex;
+    margin-right: auto;
+  }
+
+  .WaveViewer__controlGroup--right {
+    align-items: center;
+    display: flex;
+    margin-left: auto;
+  }
+}
+
+.Footer {
+  font-size: .9em;
+  color: #56565c;
+  margin: 2rem 0;
+}

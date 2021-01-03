@@ -1,0 +1,24 @@
+{
+  "name": "flipnote-audio-tool",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --public-url ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^4.1.3",
+    "@types/wavesurfer.js": "^3.3.1"
+  },
+  "dependencies": {
+    "flipnote.js": "^5.1.1",
+    "preact": "^10.5.8",
+    "wavesurfer.js": "^4.3.0"
+  }
+}
