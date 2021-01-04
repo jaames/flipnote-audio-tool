@@ -99,6 +99,13 @@ a {
     height: 34px;
   }
 
+  .Input__entry--textarea {
+    resize: vertical;
+    display: block;
+    width: 100%;
+    min-height: 132px
+  }
+
   .InputGroup & {
     flex: 1;
     margin: 8px;

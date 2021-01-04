@@ -6,8 +6,20 @@ interface Props {
   value: any;
   type: 'int' | 'float' | 'array';
   onInput: (value: any) => void;
+  textarea?: boolean;
   disabled?: boolean;
 };
+
+// https://stackoverflow.com/questions/26156292/trim-specific-character-from-a-string
+function trim (s: string, c: string) {
+  if (c === "]")
+    c = "\\]";
+  if (c === "\\")
+    c = "\\\\";
+  return s.replace(new RegExp(
+    "^[" + c + "]+|[" + c + "]+$", "g"
+  ), "");
+}
 
 export const Input: FunctionComponent<Props> = ({
   type,
@@ -15,6 +27,7 @@ export const Input: FunctionComponent<Props> = ({
   id, 
   value,
   onInput,
+  textarea,
   disabled
 }) => {
   const handleInput = function(e: Event) {
@@ -28,7 +41,7 @@ export const Input: FunctionComponent<Props> = ({
         value = parseFloat(target.value);
         break;
       case 'array':
-        value = JSON.parse(`[ ${ target.value } ]`);
+        value = JSON.parse(`[ ${ trim(target.value.trim(), ',') } ]`);
         break;
     }
     onInput(value);
@@ -42,14 +55,26 @@ export const Input: FunctionComponent<Props> = ({
       >
         { title }
       </label>
-      <input
-        class="Input__entry"
-        id={ id }
-        type={ type === 'array' ? 'string' : 'number' }
-        disabled={ disabled }
-        value={ value }
-        onChange={ handleInput }
-      />
+      {textarea && (
+        <textarea
+          class="Input__entry Input__entry--textarea"
+          id={ id }
+          type={ type === 'array' ? 'string' : 'number' }
+          disabled={ disabled }
+          value={ value }
+          onChange={ handleInput }
+        />
+      )}
+      {!textarea && (
+        <input
+          class="Input__entry"
+          id={ id }
+          type={ type === 'array' ? 'string' : 'number' }
+          disabled={ disabled }
+          value={ value }
+          onChange={ handleInput }
+        />
+      )}
     </div>
   );
 };
@@ -60,5 +85,6 @@ Input.defaultProps = {
   value: 0,
   type: 'int',
   onInput: (value: any) => {},
+  textarea: false,
   disabled: false
 };

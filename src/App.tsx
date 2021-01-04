@@ -179,6 +179,30 @@ export class App extends Component<Props, State> {
     }
   }
 
+  updateIndexTable2Bit = (value: number[]) => {
+    if (Array.isArray(value)) {
+      this.setState({indexTable2Bit: value });
+      this.audioRenderer.indexTable2Bit = value;
+      this.updateAudio();
+    }
+  }
+
+  updateIndexTable4Bit = (value: number[]) => {
+    if (Array.isArray(value)) {
+      this.setState({indexTable4Bit: value });
+      this.audioRenderer.indexTable4Bit = value;
+      this.updateAudio();
+    }
+  }
+
+  updateStepTable = (value: number[]) => {
+    if (Array.isArray(value)) {
+      this.setState({stepTable: value });
+      this.audioRenderer.stepTable = value;
+      this.updateAudio();
+    }
+  }
+
   render() {
     const props = this.props;
     const state = this.state;
@@ -287,20 +311,28 @@ export class App extends Component<Props, State> {
             onInput={ this.updateVariableSwitchThreshold }
           />
           <div class="BigInputGroup">
-            {/* <Input
+            <Input
               title="2 Bit Index Table"
               id="2BitIndexTable"
               type="array"
               value={ state.indexTable2Bit }
-              onInput={ this.updateSampleSize }
+              onInput={ this.updateIndexTable2Bit }
             />
             <Input
               title="4 Bit Index Table"
               id="4BitIndexTable"
               type="array"
               value={ state.indexTable4Bit }
-              onInput={ this.updateSampleSize }
-            /> */}
+              onInput={ this.updateIndexTable4Bit }
+            />
+            <Input
+              title="Step Table"
+              id="stepTable"
+              type="array"
+              textarea={ true }
+              value={ state.stepTable }
+              onInput={ this.updateStepTable }
+            />
           </div>
         </InputGroup>
         <Footer/>
