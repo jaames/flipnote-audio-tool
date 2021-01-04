@@ -5,8 +5,6 @@ export const Header: FunctionComponent = () => (
     <h1 class="Header__title">
       Flipnote Audio Tool
     </h1>
-    <p class="Header__blurb">
-      
-    </p>
+    <a href="https://github.com/jaames/flipnote-audio-tool">View on GitHub</a>
   </header>
 );

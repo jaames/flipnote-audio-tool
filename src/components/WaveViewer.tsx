@@ -77,7 +77,7 @@ export class WaveViewer extends Component<Props,  State> {
 
       let numClippedSamples = 0;
       pcm16.forEach((sample, i) => {
-        if (sample == -32768 || sample == 32767)
+        if (sample <= -32768 || sample >= 32767)
           numClippedSamples += 1;
         pcmF32[i] = sample / 32767;
       });

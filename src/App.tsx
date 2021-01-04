@@ -69,6 +69,14 @@ export class App extends Component<Props, State> {
     this.loadFlipnote(sampleUrl);
   }
 
+  handleFileUpload = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files.length) {
+      const file = target.files[0];
+      this.loadFlipnote(file);
+    }
+  }
+
   // call this whenever an audioRenderer setting has been updated
   async updateAudio() {
     const pcmBuffer = this.audioRenderer.renderPcm();
@@ -177,7 +185,16 @@ export class App extends Component<Props, State> {
     return (
       <div class="App">
         <Header/>
-        <NotePreview note={ state.note }/>
+        <div class="Row">
+          <div class="Column">
+            <div class="UploadPanel">
+              <input type="file" accept=".kwz" onChange={ this.handleFileUpload }/>
+            </div>
+          </div>
+          <div class="Column">
+            <NotePreview note={ state.note }/>
+          </div>
+        </div>
         <WaveViewer buffer={ state.pcmBuffer }></WaveViewer>
         <InputGroup title="Initial ADPCM State">
           <Input
