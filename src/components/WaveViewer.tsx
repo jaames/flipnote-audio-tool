@@ -22,14 +22,18 @@ interface Props {
 
 interface State {
   isPlaying: boolean;
+  volume: number;
   clipRatio: number;
+  average: number;
 };
 
 export class WaveViewer extends Component<Props,  State> {
 
   state: State = {
     isPlaying: false,
+    volume: 1,
     clipRatio: 0,
+    average: 0,
   };
 
   sourceBuffer: AudioBuffer;
@@ -76,14 +80,22 @@ export class WaveViewer extends Component<Props,  State> {
       const pcmF32 = new Float32Array(numSamples);
 
       let numClippedSamples = 0;
+      let sum = 0;
       pcm16.forEach((sample, i) => {
+        // count number of samples that hit the clipping boundary
         if (sample <= -32768 || sample >= 32767)
           numClippedSamples += 1;
-        pcmF32[i] = sample / 32767;
+        // convert sample to float 0..1 range
+        const floatSample = sample / 32767;
+        // sum samples for calculating an average
+        sum += floatSample;
+        pcmF32[i] = floatSample;
       });
-
       audioBuffer.copyToChannel(pcmF32, 0, 0);
-      this.setState({ clipRatio: numClippedSamples / numSamples });
+      this.setState({
+        clipRatio: numClippedSamples / numSamples,
+        average: sum / numSamples,
+      });
       delete this.sourceBuffer;
       this.sourceBuffer = audioBuffer;
       this.wavesurfer.empty();
@@ -107,13 +119,33 @@ export class WaveViewer extends Component<Props,  State> {
           <div class="ButtonGroup WaveViewer__controlGroup--left">
             <div class="Button" style={{ width: '70px' }} onClick={ this.togglePlay }>{ state.isPlaying ? 'Pause' : 'Play' }</div>
             <div class="Button" onClick={ this.saveWav }>Download .WAV</div>
+            <span class="WaveViewer__stat">
+              <input
+                type="range"
+                name=""
+                id=""
+                min="0"
+                max="1"
+                step=".01"
+                onInput={ this.updateVolume }
+              />
+            </span>
           </div>
           <div class="WaveViewer__controlGroup--right">
-            <span>Clipping ratio: { (state.clipRatio * 100).toPrecision(2) }%</span>
+            <span class="WaveViewer__stat">Clipping ratio: { (state.clipRatio * 100).toPrecision(2) }%</span>
+            <span class="WaveViewer__stat">Average: { (state.average).toPrecision(3) }%</span>
           </div>
         </div>
       </div>
     );
+  }
+
+  updateVolume = (e: Event) => {
+    const target = e.target as HTMLInputElement;
+    const value = parseFloat(target.value);
+    console.log(value)
+    this.wavesurfer.setVolume(value);
+    this.setState({ volume: value });
   }
 
   togglePlay = () => {

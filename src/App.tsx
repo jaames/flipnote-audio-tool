@@ -65,6 +65,14 @@ export class App extends Component<Props, State> {
     this.updateAudio();
   }
 
+  // call this whenever an audioRenderer setting has been updated
+  async updateAudio() {
+    const pcmBuffer = this.audioRenderer.renderPcm();
+    console.log('new bgm pcm buffer:', pcmBuffer);
+    this.setState({ pcmBuffer });
+  }
+
+
   componentDidMount() {
     this.loadFlipnote(sampleUrl);
   }
@@ -75,12 +83,6 @@ export class App extends Component<Props, State> {
       const file = target.files[0];
       this.loadFlipnote(file);
     }
-  }
-
-  // call this whenever an audioRenderer setting has been updated
-  async updateAudio() {
-    const pcmBuffer = this.audioRenderer.renderPcm();
-    this.setState({ pcmBuffer });
   }
 
   updateInitialPredictor = (value: number) => {
